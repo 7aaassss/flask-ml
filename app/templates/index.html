@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сварочка</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: white; font-family: Arial, sans-serif;">Детекция дефектов сварочных швов</h1>
+        <form id="uploadForm" action="{{ url_for('upload_pic') }}" method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="file-input">
+                <label for="file">Выберите файл</label>
+                <input type="file" id="file" name="file" accept="image/*" onchange="previewImage(event)">
+            </div>
+            <div class="methods">
+                <label for="methodSelect">Выберите режим поиска дефектов</label>
+                {{ form.methodSelect(class="form-control", id="methodSelect") }}
+            </div>
+            <button type="submit" class="button">Загрузить</button>
+        </form>
+        <div id="messages"></div>
+        <div id="image-preview" class="image-preview">
+            <button id="clearButton" class="clear-button" onclick="clearImagePreview()">✕</button>
+        </div>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const imageUrl = event.target.result;
+                const imagePreview = document.getElementById('image-preview');
+                imagePreview.innerHTML = `<img src="${imageUrl}" alt="Предварительный просмотр изображения">`;
+            };
+
+            reader.readAsDataURL(file);
+        }
+        function clearImagePreview() {
+            const fileInput = document.getElementById('file');
+            fileInput.value = ''; // Сбросить выбранный файл
+            const previewImage = document.getElementById('previewImage');
+            previewImage.src = '#'; // Очистить предварительный просмотр
+            const clearButton = document.getElementById('clearButton');
+            clearButton.style.display = 'none'; // Скрыть кнопку очистки
+        }
+    </script>
+</body>
+</html>
