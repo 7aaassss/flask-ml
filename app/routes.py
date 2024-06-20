@@ -4,15 +4,14 @@ import time
 from flask import request, flash, render_template, jsonify, url_for, redirect
 from werkzeug.utils import secure_filename
 from app.forms import ImageForm
-from app.models import images
-from app import db, app
-from sqlalchemy import text
+from app import app
 from app import ml
-
+import uuid
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-
+def uid():
+        return str(uuid.uuid4())
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -26,39 +25,13 @@ def index():
     return render_template("index.html", form=form)
 
 
-@app.route('/uploads', methods=['POST', 'GET'])
-def upload_pic():
-    form = ImageForm()
-    if form.validate_on_submit():
-        if 'file' not in request.files:
-            flash('Файл не был выбран!', 'error')
-            return jsonify({'status': 'error', 'message': 'Файл не был выбран!'})
+if file and allowed_file(file.filename):
 
-        file = request.files['file']
+            filename = uid() + file.filename[-4:]
 
-        if file.filename == '':
-            flash('Имя файла не указано!', 'error')
-            return jsonify({'status': 'error', 'message': 'Имя файла не указано!'})
-
-        if file and allowed_file(file.filename):
-            count = db.session.execute(text("SELECT COUNT(*) FROM images")).fetchone()[0]
-
-
-            filename = f"{count + 1}_{secure_filename(file.filename)}"
-
-
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-
+            filepath = os.path.join(os.getcwd(), filename)
 
             file.save(filepath)
-
-            uploaded_file = images(filename=filename)
-
-
-            db.session.add(uploaded_file)
-
-
-            db.session.commit()
 
             selected_method = request.form['methodSelect']
             if selected_method == 'DETR':
