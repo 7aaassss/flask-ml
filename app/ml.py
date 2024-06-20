@@ -5,8 +5,8 @@ import os
 from app import app
 
 
-detr_model = RTDETR("../last.pt")  #сюда вставить .pt файл модели которую скинем
-yolo_model = YOLO("../best.pt")
+detr_model = RTDETR("last.pt")  #сюда вставить .pt файл модели которую скинем
+yolo_model = YOLO("best.pt")
 
 def show_detected_image(img_path, method):
     img = cv2.imread(img_path)
@@ -20,7 +20,6 @@ def show_detected_image(img_path, method):
     plt.imshow(detect_img)
     plt.axis('off')
     filename = "processed_" + os.path.basename(img_path)
-    processed_path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-    plt.savefig(processed_path, bbox_inches='tight', pad_inches=0.1)
+    plt.savefig(filename, bbox_inches='tight', pad_inches=0.1)
     os.remove(img_path)
     return filename
