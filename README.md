@@ -2,22 +2,20 @@
 
 Описание
 Данное приложение предоставляет доступ к двум моделям машинного обучения:
-
-YOLO (You Only Look Once)
-DETR (DEtection TRansformer)
+### YOLO (You Only Look Once)
+### DETR (DEtection TRansformer)
 Модели упакованы в Docker контейнеры для удобного развёртывания и масштабирования.
 
 Установка и запуск
 Для запуска приложения локально выполните следующие шаги:
 
 Клонировать репозиторий:
-git clone https://github.com/your-username/flask-ml.git
-cd flask-ml
+`git clone https://github.com/your-username/flask-ml.git`
+`cd flask-ml`
 Собрать Docker контейнер:
-docker build -t flask-ml .
+`docker build -t flask-ml .`
 Запустить Docker контейнер:
-Копировать код
-docker run -d -p 5000:5000 flask-ml
+`docker run -d -p 5000:5000 flask-ml`
 Приложение Flask будет доступно по адресу http://localhost:5000
 Использование
 После запуска приложения вы можете взаимодействовать с ним с помощью веб интерфейса.
