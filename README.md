@@ -8,14 +8,13 @@
 
 Установка и запуск
 Для запуска приложения локально выполните следующие шаги:
-
-Клонировать репозиторий:
-`git clone https://github.com/your-username/flask-ml.git`
+1.Клонировать репозиторий:
+<br>`git clone https://github.com/your-username/flask-ml.git`</br>
 `cd flask-ml`
-Собрать Docker контейнер:
-`docker build -t flask-ml .`
-Запустить Docker контейнер:
-`docker run -d -p 5000:5000 flask-ml`
+2.Собрать Docker контейнер:
+<br>`docker build -t flask-ml .`</br>
+3.Запустить Docker контейнер:
+<br>`docker run -d -p 5000:5000 flask-ml`</br>
 Приложение Flask будет доступно по адресу http://localhost:5000
 Использование
 После запуска приложения вы можете взаимодействовать с ним с помощью веб интерфейса.
