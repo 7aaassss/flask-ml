@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1 style="color: white; font-family: Arial, sans-serif;">Детекция дефектов сварочных швов</h1>
-        <form id="uploadForm" action="{{ url_for('upload_pic') }}" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" action="{{ url_for('index') }}" method="post" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <div class="file-input">
                 <label for="file">Выберите файл</label>
