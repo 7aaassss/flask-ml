@@ -1,53 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сварочка</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1 style="color: white; font-family: Arial, sans-serif;">Детекция дефектов сварочных швов</h1>
-        <form id="uploadForm" action="{{ url_for('index') }}" method="post" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            <div class="file-input">
-                <label for="file">Выберите файл</label>
-                <input type="file" id="file" name="file" accept="image/*" onchange="previewImage(event)">
-            </div>
-            <div class="methods">
-                <label for="methodSelect">Выберите режим поиска дефектов</label>
-                {{ form.methodSelect(class="form-control", id="methodSelect") }}
-            </div>
-            <button type="submit" class="button">Загрузить</button>
-        </form>
-        <div id="messages"></div>
-        <div id="image-preview" class="image-preview">
-            <button id="clearButton" class="clear-button" onclick="clearImagePreview()">✕</button>
-        </div>
+{% extends "base.html" %} {% block content %}
+<form method="POST" action="{{ url_for('object_detection') }}" enctype="multipart/form-data" class="mb-auto">
+  <section class="flex flex-col items-center" id="content">
+    <div class="w-32">
+      <div class="form-control">
+        <label class="label cursor-pointer">
+          <span class="text-lg">Фото</span>
+          <input
+            type="radio"
+            value="image"
+            name="content"
+            class="radio checked:bg-accent"
+            checked="checked"
+            id="radio-photo"
+          />
+        </label>
+      </div>
+      <div class="form-control">
+        <label class="label cursor-pointer">
+          <span class="text-lg">Видео</span>
+          <input type="radio" value="video" name="content" class="radio checked:bg-accent" id="radio-video" />
+        </label>
+      </div>
+      <div class="form-control">
+        <label class="label cursor-pointer">
+          <span class="text-lg">Камера</span>
+          <input type="radio" value="camera" name="content" class="radio checked:bg-accent" id="radio-camera" />
+        </label>
+      </div>
     </div>
-
-    <script>
-        function previewImage(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                const imageUrl = event.target.result;
-                const imagePreview = document.getElementById('image-preview');
-                imagePreview.innerHTML = `<img src="${imageUrl}" alt="Предварительный просмотр изображения">`;
-            };
-
-            reader.readAsDataURL(file);
-        }
-        function clearImagePreview() {
-            const fileInput = document.getElementById('file');
-            fileInput.value = ''; // Сбросить выбранный файл
-            const previewImage = document.getElementById('previewImage');
-            previewImage.src = '#'; // Очистить предварительный просмотр
-            const clearButton = document.getElementById('clearButton');
-            clearButton.style.display = 'none'; // Скрыть кнопку очистки
-        }
-    </script>
-</body>
-</html>
+    <label class="form-control w-80">
+      <div class="label">
+        <span class="label-text">Модель ИИ</span>
+      </div>
+      <select class="select select-bordered" name="model">
+        <option value="RTDETR">RTDETR</option>
+        <option value="YOLO">YOLO</option>
+      </select>
+    </label>
+    <input
+      type="file"
+      class="file-input file-input-bordered mt-4 w-80"
+      accept=".jpg, .jpeg"
+      name="file"
+      id="file-input"
+    />
+    <img
+      src="{{ url_for('static', filename='assets/placeholder.png') }}"
+      data-placeholder="{{ url_for('static', filename='assets/placeholder.png') }}"
+      alt=""
+      class="mt-4 h-96 w-96 rounded-2xl border-2 border-neutral"
+      id="content-display"
+    />
+    <button class="btn btn-outline btn-lg mt-4" id="start-button">Запустить</button>
+  </section>
+</form>
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='javascript/display_content.js') }}"></script>
+<script src="{{ url_for('static', filename='javascript/fetch.js') }}"></script>
+{% endblock %}
