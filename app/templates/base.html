@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru" data-theme="luxury">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gptSVARKA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
+  </head>
+  <body class="flex h-screen flex-col">
+    <section id="navbar">
+      <div class="navbar justify-center shadow-xl shadow-neutral">
+        <a href="{{ url_for('index') }}" class="btn btn-ghost font-bold">
+          <svg viewBox="0 0 650 160" class="h-32 w-64 text-8xl">
+            <text x="50%" text-anchor="middle" class="animate-logo stroke-neutral-content stroke-2 tracking-wider">
+              gptSVARKA
+            </text>
+          </svg>
+        </a>
+      </div>
+    </section>
+    {% block content %} {% endblock %}
+    <section id="footer">
+      <footer
+        class="footer footer-center rounded-2xl border-4 border-b-0 border-l-0 border-r-0 border-neutral p-4 text-base-content"
+      >
+        <aside class="flex">
+          <a href="{{ url_for('about') }}" class="btn btn-neutral btn-sm">О нас</a>
+        </aside>
+      </footer>
+    </section>
+    {% block scripts %} {% endblock %}
+  </body>
+</html>

@@ -2,3 +2,11 @@ __pycache__
 venv
 best.pt
 last.pt
+node_modules
+package-lock.json
+package.json
+tailwind.config.js
+.prettierrc
+app/media/input/*
+app/media/output/*
+app/.env
